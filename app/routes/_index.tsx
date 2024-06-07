@@ -4,7 +4,7 @@ import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { ClientOnly } from "remix-utils";
 import { TrainTrip } from "types";
 
-import Map from "~/components/Map.client";
+import Map from "~/components/Map/Map.client";
 import { getTodaysDate } from "~/utils";
 
 export const meta: MetaFunction = () => {
@@ -14,14 +14,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+const env = import.meta.env;
+
 export async function action({ request }: ActionFunctionArgs) {
   const { TripNumber } = await request.json();
 
   const routeData = await fetch(
-    `${
-      process.env.BASE_URL
-    }/Schedule/Trip/${getTodaysDate()}/${TripNumber}/?key=${
-      process.env.API_KEY
+    `${env.VITE_BASE_URL}/Schedule/Trip/${getTodaysDate()}/${TripNumber}/?key=${
+      env.VITE_API_KEY
     }`
   );
 
@@ -30,7 +30,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export const loader = async () => {
   const vehiclePos = await fetch(
-    `${process.env.BASE_URL}/ServiceataGlance/Trains/All?key=${process.env.API_KEY}`
+    `${env.VITE_BASE_URL}/ServiceataGlance/Trains/All?key=${env.VITE_API_KEY}`
     // `${process.env.BASE_URL}/Gtfs/Feed/VehiclePosition?key=30024267`
     // `${process.env.BASE_URL}/UP/Gtfs/Feed/VehiclePosition?key=30024267`
   );

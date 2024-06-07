@@ -1,7 +1,6 @@
-import { Suspense } from "react";
 import { ScheduleTrip, TrainTrip } from "types";
 
-import Progress from "./Progress";
+import Progress from "../Progress";
 
 import { LINES, TRAIN_STATIONS } from "~/constants";
 
@@ -41,15 +40,11 @@ export default function PopupData({ trip, scheduleTrip }: PopupDataProps) {
           <span>{EndTime}</span>
         </div>
       </div>
-      {scheduleTrip ? (
-        <Suspense fallback={<div>Loading...</div>}>
-          <Progress
-            scheduleTrip={scheduleTrip}
-            NextStopCode={NextStopCode}
-            AtStationCode={AtStationCode}
-          />
-        </Suspense>
-      ) : null}
+      <Progress
+        scheduleTrip={scheduleTrip}
+        NextStopCode={NextStopCode}
+        AtStationCode={AtStationCode}
+      />
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 import type { LatLngBoundsLiteral, Map as MapType } from "leaflet";
 import { TrainTrip } from "types";
 
-import Interactions from "./Interactions";
-import Markers from "./Markers.client";
+import Interactions from "../Interactions";
+import Markers from "../Markers/Markers.client";
 
 import "leaflet/dist/leaflet.css";
 
@@ -46,7 +47,14 @@ export default function Map({ trips }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Markers trips={filteredTrips} />
+        <MarkerClusterGroup
+          chunkedLoading
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom={false}
+          maxClusterRadius={50}
+        >
+          <Markers trips={filteredTrips} />
+        </MarkerClusterGroup>
         <Interactions
           trips={trips}
           mapRef={mapRef}
