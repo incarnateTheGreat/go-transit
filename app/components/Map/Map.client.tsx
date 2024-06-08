@@ -53,7 +53,7 @@ export default function Map({ trips }: MapProps) {
           spiderfyOnMaxZoom={false}
           maxClusterRadius={50}
         >
-          <Markers trips={filteredTrips} />
+          <Markers trips={filteredTrips} mapRef={mapRef} />
         </MarkerClusterGroup>
         <Interactions
           trips={trips}

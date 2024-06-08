@@ -13,7 +13,7 @@ export default function Progress({
   NextStopCode,
   AtStationCode,
 }: Props) {
-  const journey = scheduleTrip?.Trips[0].Stops;
+  const journey = scheduleTrip?.Trips[0]?.Stops;
 
   if (!journey) return <div>No trip data.</div>;
 
