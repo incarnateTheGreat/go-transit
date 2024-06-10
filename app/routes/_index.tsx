@@ -29,13 +29,21 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export const loader = async () => {
-  const vehiclePos = await fetch(
-    `${env.VITE_BASE_URL}/ServiceataGlance/Trains/All?key=${env.VITE_API_KEY}`
-    // `${process.env.BASE_URL}/Gtfs/Feed/VehiclePosition?key=30024267`
-    // `${process.env.BASE_URL}/UP/Gtfs/Feed/VehiclePosition?key=30024267`
-  );
+  try {
+    const vehiclePos = await fetch(
+      `${env.VITE_BASE_URL}/ServiceataGlance/Trains/All?key=${env.VITE_API_KEY}`
+      // `${process.env.BASE_URL}/Gtfs/Feed/VehiclePosition?key=30024267`
+      // `${process.env.BASE_URL}/UP/Gtfs/Feed/VehiclePosition?key=30024267`
+    );
 
-  return vehiclePos.json();
+    return vehiclePos.json();
+  } catch (err) {
+    return {
+      Trips: {
+        Trip: [],
+      },
+    };
+  }
 };
 
 // type LoaderData = {
@@ -70,6 +78,10 @@ export default function Index() {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (vehiclePosToRender.Trips.Trip.length === 0) {
+    return <div>No trips.</div>;
+  }
 
   return (
     <ClientOnly fallback={null}>

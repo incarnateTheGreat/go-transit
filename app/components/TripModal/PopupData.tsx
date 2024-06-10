@@ -4,6 +4,23 @@ import Progress from "../Progress";
 
 import { LINES, TRAIN_STATIONS } from "~/constants";
 
+type ColumnsProps = {
+  children: JSX.Element | JSX.Element[] | null;
+};
+
+const Columns = ({ children }: ColumnsProps) => {
+  return (
+    <div
+      className="grid grid-cols-2"
+      style={{
+        gridTemplateColumns: "1fr 30%",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 type PopupDataProps = {
   trip: TrainTrip;
   scheduleTrip: ScheduleTrip | undefined;
@@ -15,30 +32,30 @@ export default function PopupData({ trip, scheduleTrip }: PopupDataProps) {
   return (
     <div>
       <div>
-        <div className="grid grid-cols-2">
+        <Columns>
           <span className="font-semibold">Line</span>
           <span>{LINES[LineCode]}</span>
-        </div>
-        <div className="grid grid-cols-2">
+        </Columns>
+        <Columns>
           <span className="font-semibold">Heading towards</span>
           <span>{TRAIN_STATIONS[LastStopCode]}</span>
-        </div>
-        <div className="grid grid-cols-2">
-          <span className="font-semibold">Next stop</span>{" "}
+        </Columns>
+        <Columns>
+          <span className="font-semibold">Next stop</span>
           <span>{TRAIN_STATIONS[NextStopCode] ?? NextStopCode}</span>
-        </div>
-        <div>
+        </Columns>
+        <Columns>
           {AtStationCode ? (
-            <div className="grid grid-cols-2">
+            <>
               <span className="font-semibold">Currenty at</span>
               <span>{TRAIN_STATIONS[AtStationCode]}</span>
-            </div>
+            </>
           ) : null}
-        </div>
-        <div className="grid grid-cols-2">
-          <span className="font-semibold">Expected arrival time</span>{" "}
+        </Columns>
+        <Columns>
+          <span className="font-semibold">Expected arrival time</span>
           <span>{EndTime}</span>
-        </div>
+        </Columns>
       </div>
       <Progress
         scheduleTrip={scheduleTrip}
