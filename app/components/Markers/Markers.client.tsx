@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Marker, Tooltip } from "react-leaflet";
 import { useFetcher } from "@remix-run/react";
 import type { Map as MapType } from "leaflet";
@@ -15,7 +15,7 @@ type MarkersProps = {
 
 export default function Markers({ trips, mapRef }: MarkersProps) {
   const [modal, setModal] = useState(false);
-  const [tripData, setTripData] = useState<TrainTrip | null>();
+  const [selectedTrip, setSelectedTrip] = useState<TrainTrip | null>();
   const fetcher = useFetcher<ScheduleTrip>();
 
   const handleGetRouteData = (TripNumber: string, trip: TrainTrip) => () => {
@@ -30,7 +30,7 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
     );
 
     setModal(true);
-    setTripData(trip);
+    setSelectedTrip(trip);
 
     if (mapRef.current) {
       if (mapRef.current?.getZoom() >= 12) {
@@ -43,18 +43,35 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
 
   const clearData = () => {
     setModal(false);
-    setTripData(null);
+    setSelectedTrip(null);
   };
+
+  // TODO: Use Zustand to store Selected Trip.
+  // When filtered line is selected and Selected Trip is not part of it, de-select trip.
+  useEffect(() => {
+    if (selectedTrip) {
+      const selectedTripUpdate = trips.find(
+        (t) => t.TripNumber === selectedTrip.TripNumber
+      );
+
+      if (selectedTripUpdate) {
+        const { Latitude, Longitude } = selectedTripUpdate;
+
+        setSelectedTrip(selectedTripUpdate);
+        mapRef.current?.flyTo([Latitude, Longitude], mapRef.current?.getZoom());
+      }
+    }
+  }, [trips, selectedTrip, mapRef]);
 
   return (
     <>
-      {modal && tripData ? (
+      {modal && selectedTrip ? (
         <TripModal
           fetcher={{
             state: fetcher.state,
             data: fetcher.data,
           }}
-          tripData={tripData}
+          tripData={selectedTrip}
           clearData={clearData}
         />
       ) : null}
