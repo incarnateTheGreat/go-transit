@@ -11,6 +11,7 @@ import "leaflet/dist/leaflet.css";
 
 import { BALA_LATLONS } from "~/railSubdivisions/bala";
 import { KINGSTON_LATLONS } from "~/railSubdivisions/kingston";
+import { MILTON_LATLONS } from "~/railSubdivisions/milton";
 import { NEWMARKET_LATLONS } from "~/railSubdivisions/newmarket";
 import { OAKVILLE_LATLONS } from "~/railSubdivisions/oakville";
 import { UXBRIDGE_LATLONS } from "~/railSubdivisions/uxbridge";
@@ -54,23 +55,28 @@ export default function Map({ trips }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <Polyline pathOptions={{ color: "red" }} positions={KINGSTON_LATLONS} />
         <Polyline
           pathOptions={{ color: "green" }}
-          positions={KINGSTON_LATLONS}
-        />
-        <Polyline
-          pathOptions={{ color: "purple" }}
           positions={UXBRIDGE_LATLONS}
         />
         <Polyline pathOptions={{ color: "orange" }} positions={BALA_LATLONS} />
         <Polyline
-          pathOptions={{ color: "blue" }}
+          pathOptions={{ color: "darkblue" }}
           positions={NEWMARKET_LATLONS}
         />
-        <Polyline pathOptions={{ color: "brown" }} positions={WESTON_LATLONS} />
+        <Polyline pathOptions={{ color: "green" }} positions={WESTON_LATLONS} />
         <Polyline
           pathOptions={{ color: "yellow" }}
           positions={OAKVILLE_LATLONS}
+        />
+        <Polyline
+          pathOptions={{ color: "brown" }}
+          positions={OAKVILLE_LATLONS}
+        />
+        <Polyline
+          pathOptions={{ color: "orange" }}
+          positions={MILTON_LATLONS}
         />
         <MarkerClusterGroup
           chunkedLoading
