@@ -1,6 +1,6 @@
 import { LatLngExpression } from "leaflet";
 
-export const UXBRIDGE_LATLONS: LatLngExpression[] | LatLngExpression[][] = [
+export const STOUFFVILLE_LATLONS: LatLngExpression[] | LatLngExpression[][] = [
   [43.7197045, -79.2533209],
   [43.7199304, -79.2531891],
   [43.7202107, -79.2530724],
@@ -503,12 +503,4 @@ export const UXBRIDGE_LATLONS: LatLngExpression[] | LatLngExpression[][] = [
   [43.9881382, -79.2386216],
   [43.9889086, -79.2382101],
   [43.9907585, -79.237147],
-  [43.9916675, -79.2366205],
-  [43.9916675, -79.2366205],
-  [43.9929593, -79.2358722],
-  [43.9929593, -79.2358722],
-  [43.9931343, -79.2357708],
-  [43.9935076, -79.2355249],
-  [43.9936261, -79.2354612],
-  [43.9937277, -79.2354111],
 ];

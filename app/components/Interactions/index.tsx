@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import type { LatLngBoundsLiteral, Map as MapType } from "leaflet";
+import type { LatLngBoundsExpression, Map as MapType } from "leaflet";
 import type { TrainTrip } from "types";
 
 import Buttons from "./Buttons";
@@ -8,7 +8,7 @@ import NoOfTrains from "./NoOfTrains";
 type InteractionsProps = {
   trips: TrainTrip[];
   mapRef: React.RefObject<MapType>;
-  bounds: LatLngBoundsLiteral;
+  bounds: LatLngBoundsExpression;
   filteredLine: string;
   setFilteredLine: Dispatch<React.SetStateAction<string>>;
 };

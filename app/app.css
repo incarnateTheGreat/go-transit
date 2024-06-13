@@ -6,3 +6,7 @@
   background: none !important;
   border: none !important;
 }
+  
+.leaflet-div-icon.selected {
+  filter: invert(38%) sepia(79%) saturate(2983%) hue-rotate(339deg) brightness(123%) contrast(92%);
+}

@@ -88,7 +88,7 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
           <Marker
             key={TripNumber}
             position={[Latitude, Longitude]}
-            icon={TrainIcon(Course)}
+            icon={TrainIcon(Course, TripNumber, selectedTrip)}
             eventHandlers={{
               click: handleGetRouteData(TripNumber, trip),
             }}

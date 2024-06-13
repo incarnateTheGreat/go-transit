@@ -1,11 +1,11 @@
 import { useRevalidator } from "@remix-run/react";
-import type { LatLngBoundsLiteral, Map as MapType } from "leaflet";
+import type { LatLngBoundsExpression, Map as MapType } from "leaflet";
 
 import Loading from "../Loading";
 
 type Props = {
   mapRef: React.RefObject<MapType>;
-  bounds: LatLngBoundsLiteral;
+  bounds: LatLngBoundsExpression;
 };
 
 export default function Buttons({ mapRef, bounds }: Props) {
