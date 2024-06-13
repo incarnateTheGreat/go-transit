@@ -4,7 +4,8 @@ import { useLoaderData, useRevalidator } from "@remix-run/react";
 import { ClientOnly } from "remix-utils";
 import { TrainTrip } from "types";
 
-import Map from "~/components/Map/Map.client";
+import TrainMap from "~/components/TrainMap/TrainMap.client";
+import { useTripsStore } from "~/store/useTripsStore";
 import { getTodaysDate } from "~/utils";
 
 export const meta: MetaFunction = () => {
@@ -46,16 +47,7 @@ export const loader = async () => {
   }
 };
 
-// type LoaderData = {
-//   header: {
-//     gtfs_realtime_version: string;
-//     incrementality: string;
-//     timestamp: number;
-//   };
-//   entity: Trip[];
-// };
-
-type TrainLoaderData = {
+export type TrainLoaderData = {
   Metadata: {
     TimeStamp: string;
     ErrorCode: string;
@@ -68,6 +60,7 @@ type TrainLoaderData = {
 
 export default function Index() {
   const vehiclePosToRender = useLoaderData<TrainLoaderData>();
+  const setTripsData = useTripsStore((e) => e.setTripsData);
 
   const revalidator = useRevalidator();
 
@@ -79,21 +72,13 @@ export default function Index() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    setTripsData(vehiclePosToRender);
+  }, [vehiclePosToRender]);
+
   if (vehiclePosToRender.Trips.Trip.length === 0) {
     return <div>No trips.</div>;
   }
 
-  return (
-    <ClientOnly fallback={null}>
-      {() => {
-        return (
-          // <Map trips={vehiclePosToRender.entity} revalidator={revalidator} />
-          <Map
-            trips={vehiclePosToRender.Trips.Trip}
-            revalidator={revalidator}
-          />
-        );
-      }}
-    </ClientOnly>
-  );
+  return <ClientOnly fallback={null}>{() => <TrainMap />}</ClientOnly>;
 }

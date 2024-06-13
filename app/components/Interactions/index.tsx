@@ -1,12 +1,12 @@
 import { Dispatch } from "react";
 import type { LatLngBoundsExpression, Map as MapType } from "leaflet";
-import type { TrainTrip } from "types";
 
 import Buttons from "./Buttons";
 import NoOfTrains from "./NoOfTrains";
 
+import { useTripsStore } from "~/store/useTripsStore";
+
 type InteractionsProps = {
-  trips: TrainTrip[];
   mapRef: React.RefObject<MapType>;
   bounds: LatLngBoundsExpression;
   filteredLine: string;
@@ -14,16 +14,31 @@ type InteractionsProps = {
 };
 
 export default function Interactions({
-  trips,
   mapRef,
   bounds,
   setFilteredLine,
   filteredLine,
 }: InteractionsProps) {
+  const tripsData = useTripsStore((e) => e.tripsData);
+
+  const dateTime = new Date(tripsData.Metadata.TimeStamp).toLocaleString(
+    "en-US",
+    {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZoneName: "short",
+      second: "numeric",
+    }
+  );
+
   return (
     <div className="absolute bottom-8 right-5 z-[450] w-56">
+      <div className="bg-slate-500 text-white mb-2 p-4 py-2 flex justify-between">
+        <span className="font-semibold">Last Updated</span>
+        <span>{dateTime}</span>
+      </div>
       <NoOfTrains
-        trips={trips}
         filteredLine={filteredLine}
         setFilteredLine={setFilteredLine}
       />

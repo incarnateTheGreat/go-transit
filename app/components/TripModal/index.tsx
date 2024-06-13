@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ScheduleTrip, TrainTrip } from "types";
+import { ScheduleTrip } from "types";
 
 import Loading from "../Loading";
 
@@ -10,11 +10,10 @@ type TripModal = {
     state: "idle" | "loading" | "submitting";
     data: ScheduleTrip | undefined;
   };
-  tripData: TrainTrip;
   clearData: () => void;
 };
 
-export default function TripModal({ fetcher, clearData, tripData }: TripModal) {
+export default function TripModal({ fetcher, clearData }: TripModal) {
   const keyInput = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
       clearData();
@@ -57,7 +56,7 @@ export default function TripModal({ fetcher, clearData, tripData }: TripModal) {
 
         {fetcher.state === "idle" ? (
           <div className="w-full">
-            <PopupData trip={tripData} scheduleTrip={fetcher.data} />
+            <PopupData scheduleTrip={fetcher.data} />
           </div>
         ) : null}
       </div>

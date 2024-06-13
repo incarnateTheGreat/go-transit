@@ -7,15 +7,16 @@ import { ScheduleTrip, TrainTrip } from "types";
 import TrainIcon from "../TrainIcon";
 import TripModal from "../TripModal";
 
+import { useTripsStore } from "~/store/useTripsStore";
+
 type MarkersProps = {
-  // trips: Trip[];
   trips: TrainTrip[];
   mapRef: React.RefObject<MapType>;
 };
 
 export default function Markers({ trips, mapRef }: MarkersProps) {
   const [modal, setModal] = useState(false);
-  const [selectedTrip, setSelectedTrip] = useState<TrainTrip | null>();
+  const { selectedTrip, setSelectedTrip } = useTripsStore((e) => e);
   const fetcher = useFetcher<ScheduleTrip>();
 
   const handleGetRouteData = (TripNumber: string, trip: TrainTrip) => () => {
@@ -46,8 +47,6 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
     setSelectedTrip(null);
   };
 
-  // TODO: Use Zustand to store Selected Trip.
-  // When filtered line is selected and Selected Trip is not part of it, de-select trip.
   useEffect(() => {
     if (selectedTrip) {
       const selectedTripUpdate = trips.find(
@@ -71,17 +70,10 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
             state: fetcher.state,
             data: fetcher.data,
           }}
-          tripData={selectedTrip}
           clearData={clearData}
         />
       ) : null}
       {trips.map((trip) => {
-        // const {
-        //   vehicle: { position, stop_id, current_status },
-        // } = trip;
-
-        // const { latitude, longitude } = position;
-
         const { TripNumber, Latitude, Longitude, Course } = trip;
 
         return (

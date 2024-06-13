@@ -1,20 +1,17 @@
 import { Dispatch } from "react";
-import { TrainTrip } from "types";
 
 import { LINES } from "~/constants";
+import { useTripsStore } from "~/store/useTripsStore";
 import { cn } from "~/utils";
 
 type Props = {
-  trips: TrainTrip[];
   filteredLine: string;
   setFilteredLine: Dispatch<React.SetStateAction<string>>;
 };
 
-export default function NoOfTrains({
-  trips,
-  filteredLine,
-  setFilteredLine,
-}: Props) {
+export default function NoOfTrains({ filteredLine, setFilteredLine }: Props) {
+  const trips = useTripsStore((e) => e.tripsData.Trips.Trip);
+
   const lines = trips.reduce((acc: Record<string, number>, train) => {
     if (train.LineCode in acc) {
       acc[train.LineCode] += 1;

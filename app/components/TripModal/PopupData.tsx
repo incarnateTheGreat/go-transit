@@ -1,8 +1,9 @@
-import { ScheduleTrip, TrainTrip } from "types";
+import { ScheduleTrip } from "types";
 
 import Progress from "../Progress";
 
 import { LINES, TRAIN_STATIONS } from "~/constants";
+import { useTripsStore } from "~/store/useTripsStore";
 
 type ColumnsProps = {
   children: JSX.Element | JSX.Element[] | null;
@@ -22,12 +23,22 @@ const Columns = ({ children }: ColumnsProps) => {
 };
 
 type PopupDataProps = {
-  trip: TrainTrip;
   scheduleTrip: ScheduleTrip | undefined;
 };
 
-export default function PopupData({ trip, scheduleTrip }: PopupDataProps) {
-  const { EndTime, LineCode, NextStopCode, LastStopCode, AtStationCode } = trip;
+export default function PopupData({ scheduleTrip }: PopupDataProps) {
+  const selectedTrip = useTripsStore((e) => e.selectedTrip);
+
+  if (!selectedTrip) return;
+
+  const {
+    EndTime,
+    LineCode,
+    NextStopCode,
+    LastStopCode,
+    AtStationCode,
+    IsInMotion,
+  } = selectedTrip;
 
   return (
     <div>
@@ -55,6 +66,10 @@ export default function PopupData({ trip, scheduleTrip }: PopupDataProps) {
         <Columns>
           <span className="font-semibold">Expected arrival time</span>
           <span>{EndTime}</span>
+        </Columns>
+        <Columns>
+          <span className="font-semibold">Status</span>
+          <span>{IsInMotion ? "Moving" : "Stopped"}</span>
         </Columns>
       </div>
       <Progress
