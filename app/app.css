@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.leaflet-tile-pane {
+  -webkit-filter: grayscale(75%);
+  filter: grayscale(75%);
+}
+
 .leaflet-div-icon {
   background: none !important;
   border: none !important;
