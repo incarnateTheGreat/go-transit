@@ -25,5 +25,9 @@ export default defineConfig(({ mode }) => {
     build: {
       cssMinify: "esbuild",
     },
+    server: {
+      host: true,
+      port: 6987,
+    },
   };
 });

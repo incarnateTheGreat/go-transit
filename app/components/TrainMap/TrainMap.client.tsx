@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { useRouteLoaderData } from "@remix-run/react";
 import type { LatLngBoundsExpression, Map as MapType } from "leaflet";
 
 import Interactions from "../Interactions";
@@ -9,18 +10,21 @@ import TrainLines from "../TrainLines";
 
 import "leaflet/dist/leaflet.css";
 
-import { useTripsStore } from "~/store/useTripsStore";
+import { TrainLoaderData } from "~/routes/_index";
 import { mapBounds } from "~/utils";
 
 export default function TrainMap() {
-  const trips = useTripsStore((e) => e.tripsData.Trips.Trip);
+  const {
+    Trips: { Trip },
+  } = useRouteLoaderData("routes/_index") as TrainLoaderData;
+
   const [filteredLine, setFilteredLine] = useState("");
   const mapRef = useRef<MapType>(null);
 
-  let filteredTrips = trips.filter((trip) => trip.LineCode === filteredLine);
+  let filteredTrips = Trip.filter((trip) => trip.LineCode === filteredLine);
 
   if (filteredTrips.length === 0) {
-    filteredTrips = trips;
+    filteredTrips = Trip;
   }
 
   const bounds = useMemo(
@@ -45,7 +49,7 @@ export default function TrainMap() {
           chunkedLoading
           showCoverageOnHover={false}
           spiderfyOnMaxZoom={false}
-          maxClusterRadius={20}
+          maxClusterRadius={5}
         >
           <Markers trips={filteredTrips} mapRef={mapRef} />
         </MarkerClusterGroup>

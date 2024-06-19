@@ -5,7 +5,6 @@ import { ClientOnly } from "remix-utils";
 import { TrainTrip } from "types";
 
 import TrainMap from "~/components/TrainMap/TrainMap.client";
-import { useTripsStore } from "~/store/useTripsStore";
 import { getTodaysDate } from "~/utils";
 
 export const meta: MetaFunction = () => {
@@ -60,7 +59,6 @@ export type TrainLoaderData = {
 
 export default function Index() {
   const vehiclePosToRender = useLoaderData<TrainLoaderData>();
-  const setTripsData = useTripsStore((e) => e.setTripsData);
 
   const revalidator = useRevalidator();
 
@@ -71,10 +69,6 @@ export default function Index() {
 
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    setTripsData(vehiclePosToRender);
-  }, [vehiclePosToRender]);
 
   if (vehiclePosToRender.Trips.Trip.length === 0) {
     return <div>No trips.</div>;

@@ -15,17 +15,20 @@ export default function Progress({ scheduleTrip, NextStopCode }: Props) {
   if (!journey) return <div>No trip data.</div>;
 
   return (
-    <div className="mt-2">
+    <div className="mt-2 bg-slate-900">
       <div>
-        <span className="font-semibold">Stops</span>{" "}
+        <span className="font-semibold px-2">Stops</span>
         <ul>
           {journey.map((stop) => {
             return (
               <li
                 key={stop.Code}
-                className={cn("grid-cols-2 grid", {
-                  "font-bold": stop.Code === NextStopCode,
-                })}
+                className={cn(
+                  "grid-cols-2 grid odd:bg-slate-600/40 px-2 py-1",
+                  {
+                    "font-bold": stop.Code === NextStopCode,
+                  }
+                )}
                 style={{
                   gridTemplateColumns: "1fr 30%",
                 }}

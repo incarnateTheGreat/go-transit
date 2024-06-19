@@ -1,7 +1,8 @@
 import { Dispatch } from "react";
+import { useRouteLoaderData } from "@remix-run/react";
 
 import { LINES } from "~/constants";
-import { useTripsStore } from "~/store/useTripsStore";
+import { TrainLoaderData } from "~/routes/_index";
 import { cn } from "~/utils";
 
 type Props = {
@@ -10,9 +11,11 @@ type Props = {
 };
 
 export default function NoOfTrains({ filteredLine, setFilteredLine }: Props) {
-  const trips = useTripsStore((e) => e.tripsData.Trips.Trip);
+  const {
+    Trips: { Trip },
+  } = useRouteLoaderData("routes/_index") as TrainLoaderData;
 
-  const lines = trips.reduce((acc: Record<string, number>, train) => {
+  const lines = Trip.reduce((acc: Record<string, number>, train) => {
     if (train.LineCode in acc) {
       acc[train.LineCode] += 1;
     } else {

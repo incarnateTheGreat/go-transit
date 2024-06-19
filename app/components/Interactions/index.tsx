@@ -1,10 +1,11 @@
 import { Dispatch } from "react";
+import { useRouteLoaderData } from "@remix-run/react";
 import type { LatLngBoundsExpression, Map as MapType } from "leaflet";
 
 import Buttons from "./Buttons";
 import NoOfTrains from "./NoOfTrains";
 
-import { useTripsStore } from "~/store/useTripsStore";
+import { TrainLoaderData } from "~/routes/_index";
 
 type InteractionsProps = {
   mapRef: React.RefObject<MapType>;
@@ -19,7 +20,7 @@ export default function Interactions({
   setFilteredLine,
   filteredLine,
 }: InteractionsProps) {
-  const tripsData = useTripsStore((e) => e.tripsData);
+  const tripsData = useRouteLoaderData("routes/_index") as TrainLoaderData;
 
   const dateTime = new Date(tripsData.Metadata.TimeStamp).toLocaleString(
     "en-US",

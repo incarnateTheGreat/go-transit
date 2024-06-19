@@ -5,14 +5,14 @@ import Progress from "../Progress";
 import { LINES, TRAIN_STATIONS } from "~/constants";
 import { useTripsStore } from "~/store/useTripsStore";
 
-type ColumnsProps = {
+type RowsProps = {
   children: JSX.Element | JSX.Element[] | null;
 };
 
-const Columns = ({ children }: ColumnsProps) => {
+const Rows = ({ children }: RowsProps) => {
   return (
     <div
-      className="grid grid-cols-2"
+      className="grid grid-cols-2 px-2"
       style={{
         gridTemplateColumns: "1fr 30%",
       }}
@@ -38,39 +38,44 @@ export default function PopupData({ scheduleTrip }: PopupDataProps) {
     LastStopCode,
     AtStationCode,
     IsInMotion,
+    Cars,
   } = selectedTrip;
 
   return (
     <div>
       <div>
-        <Columns>
+        <Rows>
           <span className="font-semibold">Line</span>
           <span>{LINES[LineCode]}</span>
-        </Columns>
-        <Columns>
+        </Rows>
+        <Rows>
           <span className="font-semibold">Heading towards</span>
           <span>{TRAIN_STATIONS[LastStopCode]}</span>
-        </Columns>
-        <Columns>
+        </Rows>
+        <Rows>
           <span className="font-semibold">Next stop</span>
           <span>{TRAIN_STATIONS[NextStopCode] ?? NextStopCode}</span>
-        </Columns>
-        <Columns>
+        </Rows>
+        <Rows>
           {AtStationCode ? (
             <>
               <span className="font-semibold">Currenty at</span>
               <span>{TRAIN_STATIONS[AtStationCode]}</span>
             </>
           ) : null}
-        </Columns>
-        <Columns>
+        </Rows>
+        <Rows>
           <span className="font-semibold">Expected arrival time</span>
           <span>{EndTime}</span>
-        </Columns>
-        <Columns>
+        </Rows>
+        <Rows>
           <span className="font-semibold">Status</span>
           <span>{IsInMotion ? "Moving" : "Stopped"}</span>
-        </Columns>
+        </Rows>
+        <Rows>
+          <span className="font-semibold">Cars</span>
+          <span>{Cars}</span>
+        </Rows>
       </div>
       <Progress
         scheduleTrip={scheduleTrip}

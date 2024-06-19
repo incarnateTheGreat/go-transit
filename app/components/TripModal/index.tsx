@@ -34,7 +34,7 @@ export default function TripModal({ fetcher, clearData }: TripModal) {
 
   return (
     <div
-      className="absolute h-96 right-2 z-[450] w-96 bg-slate-500 text-white mb-2 p-4 py-2 mt-2 overflow-x-auto flex flex-col"
+      className="absolute min-h-96 max-h-[30rem] right-2 z-[450] w-96 bg-slate-500 text-white mb-2 px-4 py-3 mt-2 overflow-x-auto flex flex-col"
       id="trip-modal"
     >
       <div className="flex justify-end">

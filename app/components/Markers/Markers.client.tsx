@@ -7,6 +7,7 @@ import { ScheduleTrip, TrainTrip } from "types";
 import TrainIcon from "../TrainIcon";
 import TripModal from "../TripModal";
 
+import { TRAIN_STATIONS } from "~/constants";
 import { useTripsStore } from "~/store/useTripsStore";
 
 type MarkersProps = {
@@ -74,7 +75,14 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
         />
       ) : null}
       {trips.map((trip) => {
-        const { TripNumber, Latitude, Longitude, Course } = trip;
+        const {
+          TripNumber,
+          Latitude,
+          Longitude,
+          Course,
+          LastStopCode,
+          EndTime,
+        } = trip;
 
         return (
           <Marker
@@ -86,7 +94,10 @@ export default function Markers({ trips, mapRef }: MarkersProps) {
             }}
           >
             <Tooltip>
-              {TripNumber} {Course}
+              <div className="flex flex-col">
+                <span>Heading towards {TRAIN_STATIONS[LastStopCode]}</span>
+                <span>Arriving at {EndTime}</span>
+              </div>
             </Tooltip>
           </Marker>
         );
