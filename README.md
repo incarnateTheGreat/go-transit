@@ -1,36 +1,43 @@
-# Welcome to Remix + Vite!
+# dps-ux-template
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/guides/vite) for details on supported features.
+Repository for GO-TRANSIT project.
+
+This project uses the following tools:
+
+- Typescript
+- [Remix](https://remix.run/)
+- React
+- TailwindCSS
+- Leaflet
+- [Overpass Turbo](https://overpass-turbo.eu/)
+- [GO Transit's API](https://api.openmetrolinx.com/OpenDataAPI/Help/Index/en)
+
+## Install and Setup
+
+Pull this repo and simply run either:
+
+```shellscript
+npm install
+```
+
+or
+
+```shellscript
+pnpm install
+```
 
 ## Development
 
-Run the Vite dev server:
+Run the dev server:
 
 ```shellscript
 npm run dev
 ```
 
-## Deployment
+or
 
-First, build your app for production:
-
-```sh
-npm run build
+```shellscript
+pnpm run dev
 ```
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
+The development environment should load successfully on `http://localhost:5173`
